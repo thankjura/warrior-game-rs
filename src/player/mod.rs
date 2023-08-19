@@ -1,5 +1,4 @@
 mod animation;
-mod movement;
 mod player;
 mod player_state_idle;
 mod player_state;
