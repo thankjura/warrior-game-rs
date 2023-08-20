@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="run game(debug)" type="ShConfigurationType">
-    <option name="SCRIPT_TEXT" value="godot4 --path $PROJECT_DIR$/game res://scenes/intro.tscn" />
+  <configuration default="false" name="run (debug+collisions)" type="ShConfigurationType">
+    <option name="SCRIPT_TEXT" value="godot4 --debug-collisions --path $PROJECT_DIR$/game res://scenes/intro.tscn" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="" />
     <option name="SCRIPT_OPTIONS" value="" />

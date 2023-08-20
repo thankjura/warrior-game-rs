@@ -1,5 +1,5 @@
 use godot::prelude::*;
-use godot::engine::{AnimatedSprite2D, CharacterBody2D, CharacterBody2DVirtual, ProjectSettings};
+use godot::engine::{AnimationPlayer, Area2D, CharacterBody2D, CharacterBody2DVirtual, ProjectSettings, Sprite2D};
 use crate::player::player_state::PlayerState;
 
 #[derive(GodotClass)]
@@ -25,7 +25,9 @@ pub struct Player {
     #[base]
     pub (super) base: Base<CharacterBody2D>,
 
-    pub (super) sprite: Option<Gd<AnimatedSprite2D>>,
+    pub (super) animation: Option<Gd<AnimationPlayer>>,
+    pub (super) sprite: Option<Gd<Sprite2D>>,
+    pub (super) attack_area: Option<Gd<Area2D>>,
 
     pub (super) state: PlayerState,
 }
@@ -33,8 +35,8 @@ pub struct Player {
 #[godot_api]
 impl Player {
     #[func]
-    pub fn on_animation_finished(&mut self) {
-        self.animation_finished();
+    pub fn on_animation_finished(&mut self, anim_name: StringName) {
+        self.animation_finished(anim_name);
     }
 }
 
@@ -53,7 +55,9 @@ impl CharacterBody2DVirtual for Player {
             player_stop_floor_velocity: 600.0,
             player_stop_air_velocity: 300.0,
             base,
+            animation: None,
             sprite: None,
+            attack_area: None,
             state: PlayerState::Idle,
         }
     }
@@ -81,9 +85,12 @@ impl CharacterBody2DVirtual for Player {
     }
 
     fn ready(&mut self) {
+        self.animation = Some(self.base.get_node_as("anim"));
         self.sprite = Some(self.base.get_node_as("sprite"));
-        self.sprite.as_deref_mut().unwrap().play();
+        self.attack_area = Some(self.base.get_node_as("attack_area"));
+
+        //self.sprite.as_deref_mut().unwrap().play();
         let callable = self.base.callable("on_animation_finished");
-        self.sprite.as_deref_mut().unwrap().connect(StringName::from("animation_finished"), callable);
+        self.animation.as_deref_mut().unwrap().connect(StringName::from("animation_finished"), callable);
     }
 }
