@@ -44,7 +44,7 @@ impl Player {
             let attack_area = self.attack_area.as_deref_mut().unwrap();
 
             let frame = self.sprite.as_deref().unwrap().get_frame();
-            if frame >= 27 && frame < 32 {
+            if frame >= 27 && frame < 30 {
                 attack_area.set_deferred(StringName::from("monitorable"), Variant::from(true));
                 attack_area.set_deferred(StringName::from("monitoring"), Variant::from(true));
             } else {
