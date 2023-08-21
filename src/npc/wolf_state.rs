@@ -11,6 +11,10 @@ pub enum WolfState {
 
 impl Wolf {
     pub(super) fn set_state(&mut self, state: WolfState) {
+        if &self.state == &state {
+            return;
+        }
+
         let prev_state = std::mem::replace(&mut self.state, state);
         self.animation_state(&prev_state);
         if &WolfState::Attack == &self.state {

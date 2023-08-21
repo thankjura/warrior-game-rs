@@ -38,6 +38,21 @@ impl Player {
     pub fn on_animation_finished(&mut self, anim_name: StringName) {
         self.animation_finished(anim_name);
     }
+    #[func]
+    pub fn on_frame_changed(&mut self) {
+        if &PlayerState::Attack == &self.state {
+            let attack_area = self.attack_area.as_deref_mut().unwrap();
+
+            let frame = self.sprite.as_deref().unwrap().get_frame();
+            if frame >= 27 && frame < 32 {
+                attack_area.set_deferred(StringName::from("monitorable"), Variant::from(true));
+                attack_area.set_deferred(StringName::from("monitoring"), Variant::from(true));
+            } else {
+                attack_area.set_deferred(StringName::from("monitorable"), Variant::from(false));
+                attack_area.set_deferred(StringName::from("monitoring"), Variant::from(false));
+            }
+        }
+    }
 }
 
 #[godot_api]
@@ -91,6 +106,8 @@ impl CharacterBody2DVirtual for Player {
 
         //self.sprite.as_deref_mut().unwrap().play();
         let callable = self.base.callable("on_animation_finished");
+        let frame_changed_callable = self.base.callable("on_frame_changed");
         self.animation.as_deref_mut().unwrap().connect(StringName::from("animation_finished"), callable);
+        self.sprite.as_deref_mut().unwrap().connect(StringName::from("frame_changed"), frame_changed_callable);
     }
 }

@@ -5,9 +5,6 @@ use crate::npc::wolf_state::WolfState;
 
 impl Wolf {
     pub (super) fn animation_state(&mut self, prev_state: &WolfState) {
-        if &self.state == prev_state {
-            return;
-        }
         if let Some(animation) = &mut self.animation {
             let animation = animation.deref_mut();
             match self.state {

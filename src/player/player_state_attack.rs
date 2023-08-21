@@ -25,11 +25,16 @@ impl Player {
         self.base.set_velocity(velocity);
         self.base.move_and_slide();
 
-        let sprite = self.sprite.as_deref_mut().unwrap();
-        let attack_area = self.attack_area.as_deref_mut().unwrap();
-        if sprite.get_frame() >= 27 && !attack_area.is_monitorable() {
-            attack_area.set_deferred(StringName::from("monitorable"), Variant::from(true));
-            attack_area.set_deferred(StringName::from("monitoring"), Variant::from(true));
-        }
+        // let sprite = self.sprite.as_deref_mut().unwrap();
+        // let attack_area = self.attack_area.as_deref_mut().unwrap();
+        // if sprite.get_frame() >= 27  && sprite.get_frame() < 32{
+        //     if !attack_area.is_monitorable() {
+        //         attack_area.set_deferred(StringName::from("monitorable"), Variant::from(true));
+        //         attack_area.set_deferred(StringName::from("monitoring"), Variant::from(true));
+        //     }
+        // } else if attack_area.is_monitorable() {
+        //     attack_area.set_deferred(StringName::from("monitorable"), Variant::from(false));
+        //     attack_area.set_deferred(StringName::from("monitoring"), Variant::from(false));
+        // }
     }
 }
